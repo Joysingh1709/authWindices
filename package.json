@@ -1,0 +1,21 @@
+{
+  "name": "auth-windices",
+  "version": "1.0.0",
+  "description": "authentication windices",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "Windices",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql": "^2.18.1",
+    "node-cron": "^3.0.0",
+    "nodemailer": "^6.6.1",
+    "passport": "^0.4.1"
+  }
+}

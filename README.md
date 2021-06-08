@@ -1,2 +1,2 @@
-# authWindices
+# Auth Windices
 Windices Authentication system
