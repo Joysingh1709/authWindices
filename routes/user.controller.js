@@ -1,6 +1,7 @@
 const { create, getUser } = require('./user.service');
-
+const { generateAcessToken, generateRefreshToken } = require('../auth/generateToken');
 const { genSaltSync } = require('bcrypt'); //hashSync
+const Tokens = require('../auth/tokens');
 
 module.exports = {
     createUser: (req, res) => {
@@ -36,5 +37,13 @@ module.exports = {
                 data: result
             });
         });
+    },
+    userLogin: (req, res) => {
+        if (!req.body.username, !req.body.password) res.sendStatus(403)
+        const user = { username: req.body.username, password: req.body.password }
+        const accessToken = generateAcessToken(user);
+        const refreshToken = generateRefreshToken(user);
+        Tokens.push(refreshToken);
+        res.json({ success: true, accessToken: accessToken, refreshToken: refreshToken })
     }
 }
