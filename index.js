@@ -3,13 +3,29 @@ const express = require('express');
 const Tokens = require('./auth/tokens');
 const jwt = require('jsonwebtoken');
 const app = express();
-const userRoute = require('./routes/user.router');
+const cors = require('cors')
+const userRoute = require('./api/user.router');
+const googleRoute = require('./api/google.router');
 const { generateAcessToken } = require('./auth/generateToken');
+const passport = require('passport');
+var session = require("express-session")
+require('./config/passportConfig')
 
-const port = 3030 || process.env.PORT;
+const port = process.env.PORT || 3030;
 
+
+// Middlewares
 app.use(express.urlencoded({ extended: false }));
+app.use(cors())
 app.use(express.json());
+app.use(session({
+    secret: 'cat',
+    resave: false,
+    saveUninitialized: true,
+    keys: ['key1', 'key2']
+}))
+app.use(passport.initialize());
+app.use(passport.session());
 
 // routes
 app.get('/', (req, res) => {
@@ -40,6 +56,8 @@ app.delete('/token', (req, res) => {
 })
 
 app.use('/api/users', userRoute);
+
+app.use('/google', googleRoute);
 
 app.listen(port, () => {
     console.log(`app listening at http://localhost:${port}`)

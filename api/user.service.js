@@ -27,5 +27,32 @@ module.exports = {
                 return callback(null, results);
             }
         )
+    },
+    loginUser: (data, callback) => {
+        pool.query(
+            `select * from user where name = ? AND password = ?`,
+            [
+                data.username,
+                data.password
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    return callback(error);
+                }
+                return callback(null, results);
+            }
+        )
+    },
+    getUserByName: (data, callback) => {
+        pool.query(
+            `select * from user where name = ?`,
+            [data.name],
+            (error, results, fields) => {
+                if (error) {
+                    return callback(error);
+                }
+                return callback(null, results);
+            }
+        )
     }
 }
