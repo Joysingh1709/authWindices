@@ -1,4 +1,4 @@
-const { create, getUser, loginUser } = require('./user.service');
+const { create, getUser, loginUser, getUserByUserId } = require('./user.service');
 const { generateAcessToken, generateRefreshToken } = require('../auth/generateToken');
 const { genSaltSync, hashSync } = require('bcrypt'); //hashSync
 const Tokens = require('../auth/tokens');
@@ -35,9 +35,27 @@ module.exports = {
             role: req.body.role,
             username: req.body.username,
             email: req.body.email,
-            password: hashP
+            password: hashP,
+            id: 'newUserId'
         };
 
+    },
+    getUserById: (req, res) => {
+        const userId = req.params.id;
+        getUserByUserId({ id: userId }, (err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({
+                    success: false,
+                    message: 'Database error',
+                    error: err
+                });
+            }
+            return res.status(200).json({
+                success: true,
+                data: result
+            });
+        });
     },
     getAllUsers: (req, res) => {
         getUser((err, result) => {

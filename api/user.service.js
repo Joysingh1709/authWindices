@@ -54,5 +54,17 @@ module.exports = {
                 return callback(null, results);
             }
         )
+    },
+    getUserByUserId: (data, callback) => {
+        pool.query(
+            `select * from user where id = ?`,
+            [data.id],
+            (error, results, fields) => {
+                if (error) {
+                    return callback(error);
+                }
+                return callback(null, results);
+            }
+        )
     }
 }

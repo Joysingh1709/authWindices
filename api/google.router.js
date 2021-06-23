@@ -52,11 +52,4 @@ router.get('/callback',
 
     });
 
-router.get('/logout', (req, res) => {
-    console.log("USER LOGGED OUT");
-    req.session.destroy();
-    req.logout();
-    res.redirect('http://127.0.0.1:5500/')
-})
-
 module.exports = router;
