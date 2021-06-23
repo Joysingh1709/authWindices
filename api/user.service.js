@@ -1,4 +1,4 @@
-const pool = require('../config/db');
+const { pool } = require('../config/db');
 
 module.exports = {
     create: (data, callback) => {
@@ -43,10 +43,10 @@ module.exports = {
             }
         )
     },
-    getUserByName: (data, callback) => {
+    getUserByEmail: (data, callback) => {
         pool.query(
-            `select * from user where name = ?`,
-            [data.name],
+            `select * from user where email = ?`,
+            [data.email],
             (error, results, fields) => {
                 if (error) {
                     return callback(error);

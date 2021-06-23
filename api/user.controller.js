@@ -1,12 +1,12 @@
 const { create, getUser, loginUser } = require('./user.service');
 const { generateAcessToken, generateRefreshToken } = require('../auth/generateToken');
-// const { genSaltSync } = require('bcrypt'); //hashSync
+const { genSaltSync, hashSync } = require('bcrypt'); //hashSync
 const Tokens = require('../auth/tokens');
 
 module.exports = {
     createUser: (req, res) => {
         const body = req.body;
-        // const salt = genSaltSync(10);
+        if (!body) res.status(500)
         create(body, (err, result) => {
             if (err) {
                 console.log(err);
@@ -22,6 +22,23 @@ module.exports = {
             });
         });
     },
+    createNewUser: (req, res) => {
+        const salt = genSaltSync(10);
+        const hashP = hashSync(req.body.password, salt);
+        const body = {
+            nameOfOrganisation: req.body.nameOfOrganisation,
+            nameOfOwner: req.body.nameOfOwner,
+            designation: req.body.designation,
+            typeOfFirm: req.body.typeOfFirm,
+            numberOfemployee: req.body.numberOfemployee,
+            companyUniqueCode: req.body.companyUniqueCode,
+            role: req.body.role,
+            username: req.body.username,
+            email: req.body.email,
+            password: hashP
+        };
+
+    },
     getAllUsers: (req, res) => {
         getUser((err, result) => {
             if (err) {
@@ -36,6 +53,19 @@ module.exports = {
                 success: true,
                 data: result
             });
+        });
+    },
+    getLoggedInUser: (req, res) => {
+        console.log(req.user)
+        if (!req.user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
+        return res.status(200).json({
+            success: true,
+            data: req.user
         });
     },
     userLogin: (req, res) => {

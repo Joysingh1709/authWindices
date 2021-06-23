@@ -8,4 +8,7 @@ function generateRefreshToken(user) {
     return jwt.sign(user, process.env.SECRET_REFRESH_TOKEN)
 }
 
-module.exports = { generateAcessToken, generateRefreshToken }
+module.exports = {
+    generateAcessToken,
+    generateRefreshToken
+}
