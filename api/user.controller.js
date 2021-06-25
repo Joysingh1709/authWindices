@@ -1,6 +1,6 @@
 const { create, getUser, loginUser, getUserByUserId } = require('./user.service');
 const { generateAcessToken, generateRefreshToken } = require('../auth/generateToken');
-const { genSaltSync, hashSync } = require('bcrypt'); //hashSync
+const { genSaltSync, hashSync } = require('bcryptjs'); //hashSync
 const Tokens = require('../auth/tokens');
 
 module.exports = {
